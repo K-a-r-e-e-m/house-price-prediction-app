@@ -3,6 +3,9 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+# Large training dataset
+notebooks/data/house_prices.csv
+
 # C extensions
 *.so
 
