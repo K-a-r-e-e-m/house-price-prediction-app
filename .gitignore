@@ -4,7 +4,7 @@ __pycache__/
 *$py.class
 
 # Large training dataset
-notebooks/data/house_prices.csv
+machine-learning/data/house_prices.csv
 
 # C extensions
 *.so
