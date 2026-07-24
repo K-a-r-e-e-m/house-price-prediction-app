@@ -4,26 +4,33 @@ import { useNavigate } from "react-router-dom";
 import type { PredictionRequest } from "../types/prediction";
 import { predictPrice } from "../api/predictionClient";
 import locations from "../assets/locations.json";
+import statusOptions from "../assets/status.json";
+import transactionOptions from "../assets/transaction.json";
+import furnishingOptions from "../assets/furnishing.json";
+import facingOptions from "../assets/facing.json";
+import overlookingOptions from "../assets/overlooking.json";
+import ownershipOptions from "../assets/ownership.json";
+import parkingOptions from "../assets/car_parking.json";
 import "./PredictionForm.css";
 
 export default function PredictionForm() {
   const navigate = useNavigate();
 
-  const [form, setForm] = useState<PredictionRequest>({
+    const [form, setForm] = useState<PredictionRequest>({
     location: "",
     total_area: 0,
     status: "",
     transaction: "",
     furnishing: "",
-    facing: "",
-    overlooking: "",
+    facing: "Unknown",
+    overlooking: "Unknown",
     society: "",
     bathroom: 1,
     balcony: 0,
-    car_parking: "",
+    car_parking: "Unknown",
     ownership: "",
     floor_num: 0,
-  });
+    });
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -57,11 +64,24 @@ export default function PredictionForm() {
     setError("Please select furnishing.");
     return;
   }
+  if (!form.ownership) {
+    setError("Please select ownership.");
+    return;
+  }
     
   try {
     setLoading(true);
 
-    const result = await predictPrice(form);
+    const payload: PredictionRequest = {
+    ...form,
+    society: (form.society ?? "").trim() || "Unknown",
+    overlooking: form.overlooking || "Unknown",
+    car_parking: form.car_parking || "Unknown",
+    facing: form.facing || "Unknown",
+    };
+
+    const result = await predictPrice(payload);
+    // const result = await predictPrice(form);
 
     // console.log(result);
 
@@ -195,8 +215,12 @@ export default function PredictionForm() {
         }
         >
         <option value="">Select Status</option>
-        <option value="Ready to Move">Ready to Move</option>
-        <option value="Under Construction">Under Construction</option>
+
+        {statusOptions.map((item) => (
+        <option key={item} value={item}>
+            {item}
+        </option>
+        ))}
         </select>
     </div>
 
@@ -217,8 +241,12 @@ export default function PredictionForm() {
         }
         >
         <option value="">Select Transaction</option>
-        <option value="Resale">Resale</option>
-        <option value="New Property">New Property</option>
+
+        {transactionOptions.map((item) => (
+        <option key={item} value={item}>
+            {item}
+        </option>
+        ))}
         </select>
     </div>
 
@@ -239,9 +267,12 @@ export default function PredictionForm() {
         }
         >
         <option value="">Select Furnishing</option>
-        <option value="Unfurnished">Unfurnished</option>
-        <option value="Semi-Furnished">Semi-Furnished</option>
-        <option value="Furnished">Furnished</option>
+
+        {furnishingOptions.map((item) => (
+        <option key={item} value={item}>
+            {item}
+        </option>
+        ))}
         </select>
     </div>
 
@@ -259,11 +290,15 @@ export default function PredictionForm() {
             })
         }
         >
-        <option value="">Select Facing</option>
-        <option value="North">North</option>
-        <option value="South">South</option>
-        <option value="East">East</option>
-        <option value="West">West</option>
+        <option value="Unknown">Unknown</option>
+
+        {facingOptions
+            .filter((item) => item !== "Unknown")
+            .map((item) => (
+            <option key={item} value={item}>
+                {item}
+            </option>
+            ))}
         </select>
     </div>
 
@@ -271,21 +306,26 @@ export default function PredictionForm() {
     <div>
         <label htmlFor="overlooking">Overlooking</label>
 
-        <select
-        id="overlooking"
-        value={form.overlooking}
-        onChange={(e) =>
-            setForm({
-            ...form,
-            overlooking: e.target.value,
-            })
-        }
-        >
-        <option value="">Select Overlooking</option>
-        <option value="Main Road">Main Road</option>
-        <option value="Garden">Garden</option>
-        <option value="Pool">Pool</option>
-        </select>
+    <select
+    id="overlooking"
+    value={form.overlooking}
+    onChange={(e) =>
+        setForm({
+        ...form,
+        overlooking: e.target.value,
+        })
+    }
+    >
+    <option value="Unknown">Unknown</option>
+
+    {overlookingOptions
+        .filter((item) => item !== "Unknown")
+        .map((item) => (
+        <option key={item} value={item}>
+            {item}
+        </option>
+        ))}
+    </select>
     </div>
 
     {/* Society */}
@@ -300,7 +340,7 @@ export default function PredictionForm() {
         onChange={(e) =>
             setForm({
             ...form,
-            society: e.target.value,
+            society: e.target.value.trim(),
             })
         }
         />
@@ -320,9 +360,15 @@ export default function PredictionForm() {
             })
         }
         >
-        <option value="">Select Parking</option>
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
+        <option value="Unknown">Unknown</option>
+
+        {parkingOptions
+            .filter((item) => item !== "Unknown")
+            .map((item) => (
+            <option key={item} value={item}>
+                {item}
+            </option>
+            ))}
         </select>
     </div>
 
@@ -341,8 +387,12 @@ export default function PredictionForm() {
         }
         >
         <option value="">Select Ownership</option>
-        <option value="Freehold">Freehold</option>
-        <option value="Leasehold">Leasehold</option>
+
+        {ownershipOptions.map((item) => (
+        <option key={item} value={item}>
+            {item}
+        </option>
+        ))}
         </select>
     </div>
 
