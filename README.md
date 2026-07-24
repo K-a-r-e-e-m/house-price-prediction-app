@@ -130,3 +130,11 @@ Open `house_price_model.ipynb` to inspect data preparation, model training, eval
 - `GET /health` — health check
 - `POST /predict` — predict house price from property data
 - `GET /docs` — OpenAPI swagger documentation
+
+## Team
+
+This project was developed by a team of 3 members:
+
+- Kareem Hany [GitHub Profile](https://github.com/K-a-r-e-e-m)
+- Mostafa Mohamed [GitHub Profile](https://github.com/Mostafa-AbdElnaby07)
+- Ahmed Abdelbdea [GitHub Profile](https://github.com/engahmedabdelbdea-ui)
