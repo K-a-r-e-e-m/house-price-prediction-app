@@ -1,0 +1,21 @@
+[
+  "Garden/Park",
+  "Garden/Park, Main Road",
+  "Garden/Park, Main Road, Pool",
+  "Garden/Park, Not Available",
+  "Garden/Park, Pool",
+  "Garden/Park, Pool, Main Road",
+  "Main Road",
+  "Main Road, Garden/Park",
+  "Main Road, Garden/Park, Pool",
+  "Main Road, Not Available",
+  "Main Road, Pool",
+  "Main Road, Pool, Garden/Park",
+  "Pool",
+  "Pool, Garden/Park",
+  "Pool, Garden/Park, Main Road",
+  "Pool, Main Road",
+  "Pool, Main Road, Garden/Park",
+  "Pool, Main Road, Not Available",
+  "Unknown"
+]
